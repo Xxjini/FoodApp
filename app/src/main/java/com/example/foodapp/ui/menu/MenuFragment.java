@@ -4,30 +4,41 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.foodapp.R;
+import com.example.foodapp.model.Controllers.MenuController;
+import  com.example.foodapp.model.Menu.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class MenuFragment extends Fragment {
 
-    private MenuViewModel menuViewModel;
+    private RecyclerView recyclerView;
+     public  MenuFragment(){
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    }
+
+    public View onCreateView( LayoutInflater inflater,
+
             ViewGroup container, Bundle savedInstanceState) {
-        menuViewModel =
-                ViewModelProviders.of(this).get(MenuViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_menu, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        recyclerView =view.findViewById(R.id.food_RV);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(new FoodListAdapter(this.getContext()));
+
+
+        return  view;
     }
 }
+
+
+
